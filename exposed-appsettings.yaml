@@ -1,0 +1,24 @@
+id: appsettings-json-check
+info:
+  name: AppSettings.json Check
+  author: omkar
+  severity: high
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/appsettings.json"
+    matchers:
+      - type: word
+        words:
+          - "Logging"
+          - "AllowedHosts"
+          - "ConnectionStrings"
+        condition: and
+      - type: status
+        status:
+          - 200
+      - type: word
+        words:
+          - "application/json"
+        part: header
