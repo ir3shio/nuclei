@@ -8,6 +8,8 @@ http:
   - method: GET
     path:
       - "{{BaseURL}}/appsettings.json"
+
+    matchers-condition: and
     matchers:
       - type: word
         words:
