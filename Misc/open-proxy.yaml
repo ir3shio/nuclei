@@ -1,0 +1,165 @@
+id: open-proxy-localhost
+
+info:
+  name: Open Proxy to Other Web Ports via Proxy's localhost Interface
+  author: sullo
+  severity: high
+  description: The host is configured as a proxy which allows access to web ports on the host's internal interface.
+  remediation: Disable the proxy or restrict configuration to only allow access to approved hosts/ports.
+  reference:
+    - https://blog.projectdiscovery.io/abusing-reverse-proxies-internal-access/
+    - https://en.wikipedia.org/wiki/Open_proxy
+    - https://www.acunetix.com/vulnerabilities/web/apache-configured-to-run-as-proxy/
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N
+    cvss-score: 8.6
+    cwe-id: CWE-441
+  metadata:
+    max-request: 6
+  tags: exposure,config,proxy,misconfig,fuzz
+
+http:
+  - raw:
+      - |+
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+
+      - |+
+        GET http://somethingthatdoesnotexist/ HTTP/1.1
+        Host: somethingthatdoesnotexist
+
+      - |+
+        GET http://127.0.0.1/ HTTP/1.1
+        Host: 127.0.0.1
+
+      - |+
+        GET https://127.0.0.1/ HTTP/1.1
+        Host: 127.0.0.1
+
+      - |+
+        GET http://localhost/ HTTP/1.1
+        Host: localhost
+
+      - |+
+        GET https://localhost/ HTTP/1.1
+        Host: localhost
+      - |+
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+
+      - |+
+        GET http://192.168.0.1/ HTTP/1.1
+        Host: 192.168.0.1
+
+      - |+
+        GET https://192.168.0.1/ HTTP/1.1
+        Host: 192.168.0.1
+
+      - |+
+        GET http://192.168.0.1:22/ HTTP/1.1
+        Host: 192.168.0.1
+
+      - |+
+        GET http://192.168.1.1/ HTTP/1.1
+        Host: 192.168.1.1
+
+      - |+
+        GET https://192.168.1.1/ HTTP/1.1
+        Host: 192.168.1.1
+
+      - |+
+        GET http://192.168.1.1:22/ HTTP/1.1
+        Host: 192.168.1.1
+
+      - |+
+        GET http://192.168.2.1/ HTTP/1.1
+        Host: 192.168.2.1
+
+      - |+
+        GET https://192.168.2.1/ HTTP/1.1
+        Host: 192.168.2.1
+
+      - |+
+        GET http://192.168.2.1:22/ HTTP/1.1
+        Host: 192.168.2.1
+
+      - |+
+        GET http:/10.0.0.1/ HTTP/1.1
+        Host: 10.0.0.1
+
+      - |+
+        GET https://10.0.0.1/ HTTP/1.1
+        Host: 10.0.0.1
+
+      - |+
+        GET http://10.0.0.1:22/ HTTP/1.1
+        Host: 10.0.0.1
+
+      - |+
+        GET http:/172.16.0.1/ HTTP/1.1
+        Host: 172.16.0.1
+
+      - |+
+        GET https://172.16.0.1/ HTTP/1.1
+        Host: 172.16.0.1
+
+      - |+
+        GET http://172.16.0.1:22/ HTTP/1.1
+        Host: 172.16.0.1
+
+      - |+
+        GET http:/intranet/ HTTP/1.1
+        Host: intranet
+
+      - |+
+        GET https://intranet/ HTTP/1.1
+        Host: intranet
+
+      - |+
+        GET http://intranet:22/ HTTP/1.1
+        Host: intranet
+
+      - |+
+        GET http:/mail/ HTTP/1.1
+        Host: mail
+
+      - |+
+        GET https://mail/ HTTP/1.1
+        Host: mail
+
+      - |+
+        GET http://mail:22/ HTTP/1.1
+        Host: mail
+
+      - |+
+        GET http:/ntp/ HTTP/1.1
+        Host: ntp
+
+      - |+
+        GET https://ntp/ HTTP/1.1
+        Host: ntp
+
+      - |+
+        GET http://ntp:22/ HTTP/1.1
+        Host: ntp
+
+    unsafe: true
+    stop-at-first-match: true
+    matchers:
+      - type: dsl
+        condition: or
+        dsl:
+          - (!contains(body_1, "<title>IIS7</title>") && !contains(body_2, "<title>IIS7</title>")) && (contains(body_3, "<title>IIS7</title>") || contains(body_4, "<title>IIS7</title>") || contains(body_5, "<title>IIS7</title>") || contains(body_6, "<title>IIS7</title>"))
+          - (!contains(body_1, "503 Service Unavailable") && !contains(body_2, "503 Service Unavailable")) && (contains(body_3, "503 Service Unavailable") || contains(body_4, "503 Service Unavailable") || contains(body_5, "503 Service Unavailable") || contains(body_6, "503 Service Unavailable"))
+          - (!contains(body_1, "default welcome page") && !contains(body_2, "default welcome page")) && (contains(body_3, "default welcome page") || contains(body_4, "default welcome page") || contains(body_5, "default welcome page") || contains(body_6, "default welcome page"))
+          - (!contains(body_1, "IIS Windows Server") && !contains(body_2, "IIS Windows Server")) && (contains(body_3, "IIS Windows Server") || contains(body_4, "IIS Windows Server") || contains(body_5, "IIS Windows Server") || contains(body_6, "IIS Windows Server"))
+          - (!contains(body_1, "Microsoft Azure App") && !contains(body_2, "Microsoft Azure App")) && (contains(body_3, "Microsoft Azure App") || contains(body_4, "Microsoft Azure App") || contains(body_5, "Microsoft Azure App") || contains(body_6, "Microsoft Azure App"))
+          - (!contains(body_1, "Welcome to IIS") && !contains(body_2, "Welcome to IIS")) && (contains(body_3, "Welcome to IIS") || contains(body_4, "Welcome to IIS") || contains(body_5, "Welcome to IIS") || contains(body_6, "Welcome to IIS"))
+          - (!contains(body_1, "Welcome to Microsoft Windows") && !contains(body_2, "Welcome to Microsoft Windows")) && (contains(body_3, "Welcome to Microsoft Windows") || contains(body_4, "Welcome to Microsoft Windows") || contains(body_5, "Welcome to Microsoft Windows") || contains(body_6, "Welcome to Microsoft Windows"))
+          - (!contains(body_1, "Welcome to Windows") && !contains(body_2, "Welcome to Windows")) && (contains(body_3, "Welcome to Windows") || contains(body_4, "Welcome to Windows") || contains(body_5, "Welcome to Windows") || contains(body_6, "Welcome to Windows"))
+          - (!contains(body_1, "Welcome to Windows") && !contains(body_2, "Welcome to Windows")) && (contains(body_3, "Welcome to Windows") || contains(body_4, "Welcome to Windows") || contains(body_5, "Welcome to Windows") || contains(body_6, "Welcome to Windows"))
+          - (!contains(body_1, "It works") && !contains(body_2, "It works")) && (contains(body_3, "It works") || contains(body_4, "It works") || contains(body_5, "It works") || contains(body_6, "It works"))
+          - (!contains(body_1, "ssh")) && (contains(body_2, "ssh") || contains(body_3, "ssh")) || contains(body_4, "ssh") || contains(body_5, "ssh") || contains(body_6, "ssh") || contains(body_7, "ssh") || contains(body_8, "ssh") || contains(body_9, "ssh") || contains(body_10, "ssh") || contains(body_11, "ssh") || contains(body_12, "ssh") || contains(body_13, "ssh") || contains(body_14, "ssh") || contains(body_15, "ssh") || contains(body_16, "ssh") || contains(body_17, "ssh") || contains(body_18, "ssh") || contains(body_19, "ssh") || contains(body_20, "ssh") || contains(body_21, "ssh") || contains(body_22, "ssh") || contains(body_23, "ssh") || contains(body_24, "ssh")
+          - (!contains(body_1, "SSH")) && (contains(body_2, "SSH") || contains(body_3, "SSH")) || contains(body_4, "SSH") || contains(body_5, "SSH") || contains(body_6, "SSH") || contains(body_7, "SSH") || contains(body_8, "SSH") || contains(body_9, "SSH") || contains(body_10, "SSH") || contains(body_11, "SSH") || contains(body_12, "SSH") || contains(body_13, "SSH") || contains(body_14, "SSH") || contains(body_15, "SSH") || contains(body_16, "SSH") || contains(body_17, "SSH") || contains(body_18, "SSH") || contains(body_19, "SSH") || contains(body_20, "SSH") || contains(body_21, "SSH") || contains(body_22, "SSH") || contains(body_23, "SSH")
+
+# digest: 4a0a00473045022100d7394255f0dd1478e60abe10e1a8d0bd99ef8da4803fb09bc1dbbff2e022bcbd0220105d310774d4415299863ca0f4fc9d3549b9db6e76a0f38b26b5803a33c33b18:922c64590222798bb761d5b6d8e72950
