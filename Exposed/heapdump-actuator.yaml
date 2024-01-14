@@ -1,0 +1,31 @@
+id: heapdump-actuator
+info:
+  name: Detect Springboot Heapdump Actuator
+  author: omkar
+  severity: critical
+  tags: springboot,exposure,misconfig
+  
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/v1/actuator/heapdump"
+      - "{{BaseURL}}/api/v2/actuator/heapdump"
+      - "{{BaseURL}}/api/v3/actuator/heapdump"
+      - "{{BaseURL}}/api/v4/actuator/heapdump"
+      - "{{BaseURL}}/api/v5/actuator/heapdump"
+      - "{{BaseURL}}/api/actuator/heapdump"
+      - "{{BaseURL}}/actuator/heapdump"
+      - "{{BaseURL}}/heapdump"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "JAVA PROFILE"
+          - "HPROF"
+        part: body
+
+      - type: status
+        status:
+          - 200
+          - 206
