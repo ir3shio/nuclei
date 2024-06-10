@@ -1,0 +1,24 @@
+id: magento-misconfig
+info:
+  name: Magento Configuration File Disclosure
+  author: Omkar7505
+  severity: high
+  description: local.xml contains configuration settings related to the database connection, cache, and other essential parameters for the Magento application 
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/app/etc/local.xml"
+
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+
+      - type: word
+        part: body
+        words:
+          - "<host>"
+          - "<port>"
+        condition: and
