@@ -103,7 +103,9 @@ http:
         - "war"
     max-size: 500 # Size in bytes - Max Size to read from server response
 
-    matchers-condition: and
+    stop-at-first-match: true
+
+    matchers-condition: or
     matchers:
       - type: binary
         binary:
@@ -127,8 +129,5 @@ http:
         regex:
           - "application/[-\\w.]+"
           - "INSERT into"
-        part: header
-
-      - type: status
-        status:
-          - 200
+        condition: or
+        part: body
