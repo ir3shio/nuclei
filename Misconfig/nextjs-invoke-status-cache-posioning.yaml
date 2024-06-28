@@ -7,18 +7,25 @@ info:
   description: |
     This template checks if the server responds with status code `888` when the `invoke-status: 1` header is sent along with a cache buster in the URL. Maunally check if it is vulnerable to cache posioning 
 
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+  
 http:
-  - method: GET
-    redirects: true
-    max-redirects: 3
-    path:
-      - "{{BaseURL}}/?cb={{rand_int(1000, 9999)}}"
-      - "{{BaseURL}}/somethingwhichdoesntexist?cb={{rand_int(1000, 9999)}}"
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        Priority: u=1
+        x-invoke-status: 888
 
-    headers:
-      x-invoke-status: 888
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+
 
     matchers:
-      - type: status
-        status:
-          - 888
+      - type: dsl
+        dsl:
+          - "status_code_1 == 888 && contains(body_1, '/_error')"
+          - "status_code_2 == 888 && contains(body_2, '/_error')"
+        condition: and
