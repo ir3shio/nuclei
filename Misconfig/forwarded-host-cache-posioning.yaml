@@ -1,0 +1,29 @@
+id: forwarded-host-cache-posioning
+
+info:
+  name: Forwarded Host - Cache Posioning
+  author: omkar7505
+  severity: high
+  description: |
+    Forwarded Host - Cache Posioning
+  tags: omkar7505,cache
+
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+  
+http:
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-Host: omkar7505
+
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "contains(body_2,'omkar7505')"
