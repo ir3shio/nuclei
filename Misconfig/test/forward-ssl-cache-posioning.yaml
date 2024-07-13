@@ -22,11 +22,13 @@ http:
         Host: {{Hostname}}
         X-Forwarded-SSL: 1337
 
+
       - |
         GET /?cb={{rand}} HTTP/1.1
         Host: {{Hostname}}
 
-    unsafe: true
+
+    # unsafe: true
     matchers:
       - type: dsl
         dsl:

@@ -1,0 +1,32 @@
+id: open-elasticsearch
+
+info:
+  name: Open Elastic Search 
+  author: omkar7505
+  severity: high
+  description: |
+    ElasticSearch is publicly available
+  tags: omkar7505,elastic,elasticsearch
+
+http:
+  - raw:
+      - |
+        POST /api/console/proxy?method=GET&path=%2F%5Fcat%2Findices%3Fformat%3Djson%26bytes%3Db HTTP/1.1
+        Host: {{Hostname}}
+        Kbn-Xsrf: True 
+        Content-Type: application/json
+
+      - |
+        GET /_cat/indices?format=json&bytes=b HTTP/1.1
+        Host: {{Hostname}}
+        Kbn-Xsrf: True 
+        Content-Type: application/json
+
+    stop-at-first-match: true
+    matchers-condition: or
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code_1 == 200 && contains(all_headers_1, 'X-Elastic-Product: Elasticsearch')"
+          - "status_code_2 == 200 && contains(all_headers_2, 'X-Elastic-Product: Elasticsearch')"
+
