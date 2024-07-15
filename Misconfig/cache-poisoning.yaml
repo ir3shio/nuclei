@@ -20,13 +20,14 @@ http:
       - |
         GET /?{{cache_key}}=1 HTTP/1.1
         Host: {{Hostname}}
-        X-Forwarded-Prefix: omkar7505.com
-        X-Forwarded-Host: omkar7505.com
-        X-Forwarded-For: omkar7505.com
-        X-Originating-IP: omkar7505.com
-        X-Remote-Addr: omkar7505.com
-        X-Client-IP: omkar7505.com
-        Referer: omkar7505.com
+        X-Forwarded-Prefix: omkar7505
+        X-Forwarded-Host: omkar7505
+        X-Forwarded-For: omkar7505
+        X-Originating-IP: omkar7505
+        X-Remote-Addr: omkar7505
+        X-Client-IP: omkar7505
+        Referer: omkar7505
+        User-agent: omkar7505
       - |
         GET /?{{cache_key}}=1 HTTP/1.1
         Host: {{Hostname}}
