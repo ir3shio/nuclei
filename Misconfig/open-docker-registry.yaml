@@ -1,0 +1,19 @@
+id: open-docker-registry
+
+info:
+  name: Open Docker Registry
+  author: omkar7505
+  severity: medium
+  description: |
+    Open Docker Registry Can leak Sensitive information
+  tags: config,exposure,laravel
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/v2/_catalog"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code == 200 && contains(all_headers, 'Docker-Distribution-Api-Version:')"
