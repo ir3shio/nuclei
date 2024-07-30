@@ -17,4 +17,4 @@ http:
     matchers:
       - type: dsl
         dsl:
-          - "status_code == 200 && contains(all_headers_1, 'Content-Type: text/html')"
+          - "status_code == 200 && contains(body, 'ind = query.indexOf(')"

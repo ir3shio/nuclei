@@ -1,0 +1,20 @@
+id: wampserver-vhost-manager
+
+info:
+  name: Wampserver Vhost Manager
+  author: omkar7505
+  severity: medium
+  description: |
+    Wamp page will expose sensitive configuration and vhosts.
+  tags: omkar7505,wamp
+
+
+http:  
+  - method: GET
+    path:
+      - "{{BaseURL}}/add_vhost.php?lang=english"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code == 200 && contains(body, 'VirtualHost already defined')"
