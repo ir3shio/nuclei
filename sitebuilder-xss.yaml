@@ -1,0 +1,20 @@
+id: sitebuilder-xss
+
+info:
+  name: Laravel - Sensitive Information Disclosure
+  author: omkar7505
+  severity: medium
+  description: |
+    Site Builder XSS via title paramater just append `?title=<script>alert(document.domain)</script>` to the URL
+  tags: sitebuilder,xss
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/imagelib/sitebuilder/misc/show_image.html"
+
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code == 200 && contains(all_headers_1, 'Content-Type: text/html')"
