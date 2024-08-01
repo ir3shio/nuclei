@@ -19,7 +19,7 @@ http:
         X-Middleware-Prefetch: 1
 
       - |
-        GET /?cb={{rand}} HTTP/1.1
+        GET /notexists?cb={{rand}} HTTP/1.1
         Host: {{Hostname}}
         X-Middleware-Prefetch: 1
 
