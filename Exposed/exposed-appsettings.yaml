@@ -1,7 +1,7 @@
 id: appsettings-json-check
 info:
   name: AppSettings.json Check
-  author: omkar
+  author: omkar7505
   severity: high
 
 http:

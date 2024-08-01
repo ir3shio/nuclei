@@ -1,7 +1,7 @@
 id: heapdump-actuator
 info:
   name: Detect Springboot Heapdump Actuator
-  author: omkar
+  author: omkar7505
   severity: critical
   tags: springboot,exposure,misconfig
   

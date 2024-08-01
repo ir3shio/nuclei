@@ -1,7 +1,7 @@
 id: sitebuilder-xss
 
 info:
-  name: Laravel - Sensitive Information Disclosure
+  name: Site Builder - XSS
   author: omkar7505
   severity: medium
   description: |

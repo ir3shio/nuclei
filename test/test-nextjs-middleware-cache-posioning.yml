@@ -1,0 +1,32 @@
+id: test-nextjs-middleware-cache-posioning
+
+info:
+  name: Nextjs Middleware Cache Posioning 
+  author: info
+  severity: high
+  description: |
+    This template checks if the server responds with a `X-Middleware-Skip: 1` header when the `x-middleware-prefetch: 1` header is sent along with a cache buster in the URL. Maunally check if it is vulnerable to cache posioning 
+  tags: omkar7505,nextjs,cache
+
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+  
+http:
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        X-Middleware-Prefetch: 1
+
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        X-Middleware-Prefetch: 1
+
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code_1 == 200 && contains(all_headers_1, 'X-Middleware-Skip: 1')"
+          - "status_code_2 == 200 && contains(all_headers_2, 'X-Middleware-Skip: 1')"
+        condition: or

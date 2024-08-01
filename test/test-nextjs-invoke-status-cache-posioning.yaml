@@ -1,0 +1,32 @@
+id: test-nextjs-invoke-status-cache-posioning
+
+info:
+  name: Nextjs Invoke Status Cache Posioning 
+  author: omkar7505
+  severity: info
+  description: |
+    This template checks if the server responds with status code `888` when the `invoke-status: 1` header is sent along with a cache buster in the URL. Maunally check if it is vulnerable to cache posioning 
+  tags: omkar7505,nextjs,cache
+
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+  
+http:
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        x-invoke-status: 888
+
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        x-invoke-status: 888
+
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code_1 == 888 && contains(body_1, '/_error')"
+          - "status_code_2 == 888 && contains(body_2, '/_error')"
+        condition: or
