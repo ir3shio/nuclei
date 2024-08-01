@@ -19,7 +19,7 @@ http:
         x-invoke-status: 888
 
       - |
-        GET /?cb={{rand}} HTTP/1.1
+        GET /notexists?cb={{rand}} HTTP/1.1
         Host: {{Hostname}}
         x-invoke-status: 888
 
