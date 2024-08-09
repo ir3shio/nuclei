@@ -1,0 +1,21 @@
+id: xforwarded-test
+
+info:
+  name: X-Forwarded Test 
+  author: omkar7505
+  severity: high
+  description: |
+    Forwarded Host - Cache Posioning
+  tags: omkar7505,cache
+
+http:
+  - raw:
+      - |
+        GET /?cb=123123 HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-Host: omkar7505.com
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "contains(body,'omkar7505.com')"
