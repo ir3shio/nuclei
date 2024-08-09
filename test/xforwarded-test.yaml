@@ -3,7 +3,7 @@ id: xforwarded-test
 info:
   name: X-Forwarded Test 
   author: omkar7505
-  severity: high
+  severity: info
   description: |
     Forwarded Host - Cache Posioning
   tags: omkar7505,cache
