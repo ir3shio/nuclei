@@ -22,6 +22,18 @@ http:
         Kbn-Xsrf: True 
         Content-Type: application/json
 
+      - |
+        POST /api/console/proxy?method=GET&path=%2F%5Fcat%2Findices%3Fformat%3Djson%26bytes%3Db HTTP/1.1
+        Host: {{Hostname}}:9200
+        Kbn-Xsrf: True 
+        Content-Type: application/json
+
+      - |
+        GET /_cat/indices?format=json&bytes=b HTTP/1.1
+        Host: {{Hostname}}:9200
+        Kbn-Xsrf: True 
+        Content-Type: application/json
+
     stop-at-first-match: true
     matchers-condition: or
     matchers:
@@ -29,4 +41,5 @@ http:
         dsl:
           - "status_code_1 == 200 && contains(all_headers_1, 'X-Elastic-Product: Elasticsearch')"
           - "status_code_2 == 200 && contains(all_headers_2, 'X-Elastic-Product: Elasticsearch')"
-
+          - "status_code_3 == 200 && contains(all_headers_3, 'X-Elastic-Product: Elasticsearch')"
+          - "status_code_4 == 200 && contains(all_headers_4, 'X-Elastic-Product: Elasticsearch')"
