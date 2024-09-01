@@ -36,7 +36,6 @@ http:
     payloads:
       hostval:
         - metadata.301party.com
-        - 2852039166 # decimal encoding
     unsafe: true
     matchers:
       - type: word
