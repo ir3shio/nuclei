@@ -1,0 +1,19 @@
+id: angular-upload
+
+info:
+  name: Angular Upload RCE
+  author: Omkar7505
+  severity: info
+  description: Angular Upload RCE test.
+  tags: angular,rce
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - 'angular-base64-upload'
