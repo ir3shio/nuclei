@@ -1,0 +1,28 @@
+id : elmah-file-disclosure
+
+info : 
+  name: Elmah File Disclosure
+  author: omkar7505
+  severity: high
+  reference: https://twitter.com/Jayesh25_/status/1850129148762558739
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/Elmah"
+      - "{{BaseURL}}/Elmah.axd"
+
+    stop-at-first-match: true
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "Error log for"
+          - 'Powered by <a href="http://elmah.googlecode.com/'
+        condition: and 
+      
+      - type: status
+        status: 
+          - 200
