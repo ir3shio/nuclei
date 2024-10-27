@@ -14,7 +14,7 @@ variables:
 http:
   - raw:
       - |
-        GET / HTTP/1.1
+        GET /?doesnotexist=1 HTTP/1.1
         Host: {{Hostname}}
 
       - |
