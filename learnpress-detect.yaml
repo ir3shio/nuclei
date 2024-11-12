@@ -1,0 +1,24 @@
+id : learpress-detect
+
+info : 
+  name: Learpress Detect
+  author: omkar7505
+  severity: info
+  reference: https://abrahack.com/posts/learnpress-sqli/
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-content/plugins/learnpress/readme.txt"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "WordPress LMS Plugin"
+      
+      - type: status
+        status: 
+          - 200
