@@ -7,7 +7,7 @@ info:
   reference:
     - https://nginx.org/en/docs/http/ngx_http_api_module.html
     - https://x.com/akshaysharma71/status/1825815869953552844
-  tags: nginx,fuzz,misconfig,lfi
+  tags: nginx,misconfig,lfi
 
 http:
   - method: GET
