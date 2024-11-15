@@ -15,20 +15,13 @@ info:
 http:
     raw:
       - |+
-        GET http://127.0.0.1:22 HTTP/1.1
+        GET http://{{interactsh-url}} HTTP/1.1
         Host: {{Hostname}}
 
     unsafe: true
 
-    matchers-condition: and
     matchers:
       - type: word
-        part: body
+        part: interactsh_protocol
         words:
-          - "Protocol mismatch"
-          - "OpenSSH"
-        condition: and
-
-      - type: status
-        status:
-          - 200
+          - "dns"
