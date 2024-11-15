@@ -33,8 +33,7 @@ http:
 
     payloads:
       hostval:
-        - alibaba.oast.pro
-        - 100.100.100.200
+        - 646464c8.646464c8.rbndr.us
     unsafe: true
     matchers:
       - type: word
