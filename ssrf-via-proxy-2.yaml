@@ -13,15 +13,29 @@ info:
   tags: ssrf,proxy,oast,fuzzing
 
 http:
+  - payloads:
+      verb:
+        - GET
+        - POST
+        - CONNECT
+        - TRACE
     raw:
       - |+
-        GET http://{{interactsh-url}} HTTP/1.1
+        {{verb}} http://127.0.0.1:22 HTTP/1.1
         Host: {{Hostname}}
 
+    stop-at-first-match: true
     unsafe: true
 
+    matchers-condition: and
     matchers:
       - type: word
-        part: interactsh_protocol
+        part: body
         words:
-          - "dns"
+          - "Protocol mismatch"
+          - "OpenSSH"
+        condition: and
+
+      - type: status
+        status:
+          - 200
