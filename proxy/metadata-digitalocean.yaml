@@ -33,8 +33,7 @@ http:
 
     payloads:
       hostval:
-        - aws.oast.online
-        - 169.254.169.254
+        - metadata.301party.com
     unsafe: true
     matchers:
       - type: word
