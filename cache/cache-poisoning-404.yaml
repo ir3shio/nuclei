@@ -1,8 +1,8 @@
-id: cache-poisoning
+id: cache-poisoning-404
 
 info:
   name: Cache Poisoning
-  author: Playtika ProdSec Team
+  author: omkar7505
   severity: high
   description: This template detects DoS via Cache poisoning by sending a malformed request with an unsafe /\ (forward-slash and a back-slash) and then checks if web server poisons the cache with a 404.
   tags: cache
