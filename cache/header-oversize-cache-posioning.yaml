@@ -140,7 +140,7 @@ http:
     matchers:
       - type: dsl
         dsl:
-          - "status_code_1 >= 200 && status_code_1 < 500"
+          - "status_code_1 >= 200 && status_code_1 < 500 && status_code_1 != 400"
           - "status_code_2 == 400"
           - "status_code_3 == 400" 
         condition: and
