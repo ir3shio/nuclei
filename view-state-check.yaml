@@ -1,0 +1,24 @@
+id : view-state-check
+
+info : 
+  name: View State Check
+  author: omkar7505
+  severity: info
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "__VIEWSTATE"
+      
+      - type: word
+        part: body
+        words:
+          - "__EVENT"
