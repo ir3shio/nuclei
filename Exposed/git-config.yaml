@@ -17,6 +17,10 @@ http:
   - method: GET
     path:
       - "{{BaseURL}}/.git/config"
+      - "{{BaseURL}}/static/.git/config"
+      - "{{BaseURL}}/assets/.git/config"
+      - "{{BaseURL}}/api/.git/config"
+      - "{{BaseURL}}/api/v1/.git/config"
 
     matchers-condition: and
     matchers:
