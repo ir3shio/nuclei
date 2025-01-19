@@ -1,0 +1,23 @@
+id : miniorange-2-factor-authentication
+
+info : 
+  name: miniorange 2 factor authentication  Detect
+  author: omkar7505
+  severity: info
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-content/plugins/miniorange-2-factor-authentication/readme.txt"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "WordPress Two Factor Authentication"
+      
+      - type: status
+        status: 
+          - 200

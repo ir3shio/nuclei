@@ -1,0 +1,23 @@
+id : user-role-editor-detect
+
+info : 
+  name: user role editor Detect
+  author: omkar7505
+  severity: info
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-content/plugins/user-role-editor/readme.txt"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "User Role Editor"
+      
+      - type: status
+        status: 
+          - 200

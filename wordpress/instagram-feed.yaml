@@ -1,0 +1,23 @@
+id : instagram-feed-detect
+
+info : 
+  name: instagram feed Detect
+  author: omkar7505
+  severity: info
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-content/plugins/instagram-feed/README.txt"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "Smash Balloon Social Photo Feed"
+      
+      - type: status
+        status: 
+          - 200
