@@ -8,11 +8,6 @@ info:
 http:
   - method: GET
     path:
-      - "{{BaseURL}}/api/v1/actuator/heapdump"
-      - "{{BaseURL}}/api/v2/actuator/heapdump"
-      - "{{BaseURL}}/api/v3/actuator/heapdump"
-      - "{{BaseURL}}/api/v4/actuator/heapdump"
-      - "{{BaseURL}}/api/v5/actuator/heapdump"
       - "{{BaseURL}}/api/actuator/heapdump"
       - "{{BaseURL}}/actuator/heapdump"
       - "{{BaseURL}}/heapdump"
