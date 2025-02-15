@@ -24,15 +24,15 @@ http:
         Host: test.s3.amazonaws.com
 
       - |+
-        GET http://example.com HTTP/1.1
-        Host: example.com
-
-      - |+
-        GET @example.com HTTP/1.1
+        GET http://evil.com HTTP/1.1
         Host: {{Hostname}}
 
       - |+
-        GET \@example.com HTTP/1.1
+        GET @evil.com HTTP/1.1
+        Host: {{Hostname}}
+
+      - |+
+        GET \@evil.com HTTP/1.1
         Host: {{Hostname}}
 
       - |+
@@ -46,13 +46,13 @@ http:
       - type: dsl
         dsl:
           - contains_any(body_1, "<HostId>", "</HostId>")
-          - contains(body_2, "Example Domain")
-          - contains(body_3, "Example Domain")
-          - contains(body_4, "Example Domain")
+          - contains(body_2, "Evil.Com - We get it...Daily")
+          - contains(body_3, "Evil.Com - We get it...Daily")
+          - contains(body_4, "Evil.Com - We get it...Daily")
         condition: or
 
       - type: dsl
         dsl:
           - '!contains(body_5, "<HostId>")'
-          - '!contains(body_5, "Example Domain")'
+          - '!contains(body_5, "Evil.Com - We get it...Daily")'
         condition: and
