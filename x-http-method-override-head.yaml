@@ -1,0 +1,27 @@
+id: x-http-method-override-head
+
+info:
+  name: X-Http-Method-Override HEAD Detection
+  author: ProjectDiscoveryAI
+  severity: info
+  description: |
+    This template checks if a server processes a GET request as a HEAD request when the `X-Http-Method-Override: HEAD` header is sent. It detects if the server returns a response similar to a HEAD request.
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    headers:
+      X-Http-Method-Override: HEAD
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        words:
+          - "Content-Length: "
+        part: header
+      - type: dsl
+        dsl:
+          - "len(body) == 0"
