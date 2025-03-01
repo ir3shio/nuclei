@@ -18,7 +18,7 @@ http:
         Content-Type: text/plain
         X-Http-Method-Override: PUT
 
-        {{randstr}}
+        omkar7505-test
       - |
         GET /testing-put.txt HTTP/1.1
         Host: {{Hostname}}
@@ -27,4 +27,4 @@ http:
     matchers:
       - type: dsl
         dsl:
-          - 'contains(body_2, "{{randstr}}")'
+          - 'contains(body_2, "omkar7505")'
