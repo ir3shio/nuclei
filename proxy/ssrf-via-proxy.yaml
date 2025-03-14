@@ -1,4 +1,4 @@
-id: ssrf-via-proxy
+id: ssrf-via-proxy-2
 
 info:
   name: SSRF via Proxy Unsafe
@@ -16,14 +16,9 @@ http:
   - payloads:
       verb:
         - GET
-        - HEAD
         - POST
-        - PUT
-        - DELETE
         - CONNECT
-        - OPTIONS
         - TRACE
-        - PATCH
     raw:
       - |+
         {{verb}} http://127.0.0.1:22 HTTP/1.1
@@ -44,4 +39,3 @@ http:
       - type: status
         status:
           - 200
-# digest: 490a0046304402202521accb84ca996dbc113120273493945da01a604d5f92bcb0eabcff1aa5c156022074256e92baf6c60c359442a6ec1389ed2e2ca1db7e202bdea6ecda1e0641cb89:922c64590222798bb761d5b6d8e72950
