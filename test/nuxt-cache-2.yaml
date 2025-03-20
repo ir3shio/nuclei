@@ -12,11 +12,11 @@ info:
 http:
   - raw:
       - |
-        GET /#poc=/_payload.json HTTP/1.1
+        GET /#/poc=/_payload.json HTTP/1.1
         Host: {{Hostname}}
 
       - |
-        GET /doesnotexist#poc=/_payload.json HTTP/1.1
+        GET /doesnotexist#/poc=/_payload.json HTTP/1.1
         Host: {{Hostname}}
 
 
