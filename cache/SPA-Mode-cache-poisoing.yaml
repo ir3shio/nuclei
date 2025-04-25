@@ -1,0 +1,26 @@
+id: SPA-Mode-cache-poisoing
+
+info:
+  name: React Router SPA Mode Poisoning Detection
+  author: omkar7505
+  severity: medium
+  description: This template detects Cache poisoning.
+  reference:
+    - https://gitbook.seguranca-informatica.pt/fuzzing-and-web/cache-poisoning-using-nuclei
+    - https://portswigger.net/research/practical-web-cache-poisoning
+    - https://portswigger.net/web-security/web-cache-poisoning
+  metadata:
+    max-request: 2
+  tags: cache,generic,react
+  
+http:
+  - raw:
+      - |
+        GET /?cb=1337 HTTP/1.1
+        Host: {{Hostname}}
+        X-React-Router-SPA-Mode: yes
+
+    matchers:
+      - type: word
+        words:
+          - "__reactRouterContext"
