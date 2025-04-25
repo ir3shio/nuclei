@@ -1,0 +1,26 @@
+id: prerender-cache-poisoing
+
+info:
+  name: React Router Prerender Data Poisoning Detection
+  author: omkar7505
+  severity: medium
+  description: This template detects Cache poisoning.
+  reference:
+    - https://gitbook.seguranca-informatica.pt/fuzzing-and-web/cache-poisoning-using-nuclei
+    - https://portswigger.net/research/practical-web-cache-poisoning
+    - https://portswigger.net/web-security/web-cache-poisoning
+  metadata:
+    max-request: 2
+  tags: cache,generic,react
+  
+http:
+  - raw:
+      - |
+        GET /?cb=1337 HTTP/1.1
+        Host: {{Hostname}}
+        X-React-Router-Prerender-Data: [{"_1":2},"routes/ssr", {"_3":4},"data", {"_5":6,"_7":8,"_9":10,"_11":12},"title", "omkar7505 0","description", "omkar7505 1","timestamp", "omkar7505 2", "items", [13,18,21], ["_14":15,"_16":17}, "id", 1, "name", "omkar7505 3", {"_14":19,"16":20), 2, "omkar7505 4",{"_14":22,"_16": 23},3,"omkar7505 5"]
+
+    matchers:
+      - type: word
+        words:
+          - "omkar7505"
