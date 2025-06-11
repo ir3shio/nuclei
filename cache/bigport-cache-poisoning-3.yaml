@@ -1,0 +1,29 @@
+id: bigport-cache-poisoning-3
+
+info:
+  name: Big Port Cache Poisoning Detection
+  author: omkar7505
+  severity: high
+  description: This template detects Cache poisoning.
+  metadata:
+    max-request: 2
+  tags: cache,generic
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+
+http:
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-Prefix: omkar7505.com:000443
+        X-Forwarded-Host: omkar7505.com:000443
+        
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+
+    matchers:
+      - type: dsl
+        dsl:
+          - 'contains(body_2, "omkar7505")'

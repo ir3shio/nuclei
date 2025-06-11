@@ -1,0 +1,34 @@
+id: x-forwarded-host-check
+
+info:
+  name: x-forwarded-host Cache Poisoning Detection
+  author: omkar7505
+  severity: high
+  description: This template detects Cache poisoning.
+  metadata:
+    max-request: 2
+  tags: cache,generic
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+
+http:
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-Host: {{interactsh-url}})
+        
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+
+    matchers-condition: or
+    matchers:
+      - type: dsl
+        dsl:
+          - 'contains(body_2, "omkar7505")'
+  
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
