@@ -1,0 +1,25 @@
+id: redirect-pizza-takeover
+info:
+  name: Redirect Pizza Subdomain Takeover
+  author: omkar7505
+  severity: high
+  description: Detected `redirect.pizza` Subdomain Takeover which will Redirect the user the attacker site.
+  reference:
+    - https://redirect.pizza/
+  tags: subdomain,takeover
+
+http:
+  - method: GET
+    path:
+      - '{{BaseURL}}'
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "Your DNS is pointing to redirect.pizza but no redirect can be found for this domain"
+
+      - type: status
+        status:
+          - 404
