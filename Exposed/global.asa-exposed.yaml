@@ -1,0 +1,22 @@
+id: global-asa-exposed
+info:
+  name: global.asa file exposed
+  author: omkar7505
+  severity: high
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/Global.asa.bak"
+      - "{{BaseURL}}/global.asa"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "Application_OnStart"
+          - "Sub"
+        condition: and
+      - type: status
+        status:
+          - 200
