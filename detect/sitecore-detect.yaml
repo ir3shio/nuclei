@@ -1,0 +1,27 @@
+id : sitecore-detect
+
+info : 
+  name: Sitecore Detect
+  author: omkar7505
+  severity: info
+  reference: https://labs.watchtowr.com/is-b-for-backdoor-pre-auth-rce-chain-in-sitecore-experience-platform/?1
+
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/sitecore/shell/sitecore.version.xml"
+
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "<version>"
+          - "<title>Sitecore.NET</title>"
+        condition: and
+      
+      - type: status
+        status: 
+          - 200

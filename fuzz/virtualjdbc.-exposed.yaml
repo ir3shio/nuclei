@@ -1,0 +1,26 @@
+id: virtualjdbc-exposed
+
+info:
+  name: Virtualjdbc Exposed Detect
+  author: omkar7505
+  severity: high
+  description: Template detects Virtualjdbc Exposed
+  tags: omkar7505,exposure
+
+  
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/virtualjdbc/"
+      - "{{BaseURL}}//virtualjdbc/"
+      - "{{BaseURL}}/v%69rtualjdbc/ "
+      - "{{BaseURL}}/v%2569rtualjdbc/ "
+
+    redirects: true
+    max-redirects: 5
+
+    stop-at-first-match: true
+    matchers:
+      - type: word
+        words:
+          - "Virtual JDBC"

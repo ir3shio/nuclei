@@ -1,0 +1,38 @@
+id: sensitive-csv
+
+info:
+  name: Sensitive CSV file Detect
+  author: omkar7505
+  severity: high
+  description: Template detects potential Sensitive CSV file exposed
+  tags: omkar7505,cache
+
+  
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/doesnotexist"
+      - "{{BaseURL}}/admin.php?_page=1"
+      - "{{BaseURL}}/CFIDE/debug/cf_debugFr.cfm?userPage=index.cfm"
+      - "{{BaseURL}}/{{FQDN}}.zip"
+      - "{{BaseURL}}/{{RDN}}.zip"
+      - "{{BaseURL}}/{{DN}}.zip"
+      - "{{BaseURL}}/{{SD}}.zip"
+      - "{{BaseURL}}/backup.zip"
+      - "{{BaseURL}}/old.zip"
+      - "{{BaseURL}}/backup.zip"
+
+    stop-at-first-match: true
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code_1 != 200 && status_code_2 == 200"
+          - "status_code_1 != 200 && status_code_3 == 200"
+          - "status_code_1 != 200 && status_code_4 == 200"
+          - "status_code_1 != 200 && status_code_5 == 200"
+          - "status_code_1 != 200 && status_code_6 == 200"
+          - "status_code_1 != 200 && status_code_7 == 200"
+          - "status_code_1 != 200 && status_code_8 == 200"
+          - "status_code_1 != 200 && status_code_9 == 200"
+          - "status_code_1 != 200 && status_code_10 == 200"
+        condition: or

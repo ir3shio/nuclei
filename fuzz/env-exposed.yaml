@@ -1,0 +1,20 @@
+id: env-exposed
+
+info:
+  name: .env file Detect
+  author: omkar7505
+  severity: high
+  description: Template detects potential Sensitive .env file exposed
+  tags: omkar7505,cache
+
+  
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.doesnotexist.csv"
+      - "{{BaseURL}}/.env"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "status_code_1 != 200 && status_code_2 == 200"

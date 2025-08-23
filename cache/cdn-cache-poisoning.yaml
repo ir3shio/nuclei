@@ -13,15 +13,18 @@ info:
     max-request: 2
     shodan-query: X-Amz-Server-Side-Encryption
   tags: cache,aws,poisoning,cdn,misconfig
-variables:
-  string: "{{to_lower(rand_base(8))}}={{to_lower(rand_base(8))}}"
 
 http:
   - raw:
       - |
         GET /?{{string}} HTTP/1.1
         Host: {{Hostname}}
-        X-Amz-Server-Side-Encryption: {{randstr}}
+        X-amz-copy-source: omkar7505.com
+        X-amz-website-redirect-location: omkar7505.com
+        X-amz-server-side-encryption: omkar7505.com
+        X-amz-server-side-encryption-customer-algorithm: omkar7505.com
+        X-amz-server-side-encryption-customer-key: omkar7505.com
+        X-Amz-test: omkar7505.com 
 
       - |
         GET /?{{string}} HTTP/1.1
@@ -30,7 +33,8 @@ http:
     matchers:
       - type: dsl
         dsl:
-          - 'contains(body_2, "{{randstr}}")'
+          - 'contains(body_2, "<ArgumentName>")'
+          - 'contains(body_2, "<RequestId>")'
           - 'status_code_2==400'
         condition: and
 # digest: 490a00463044022041758625af51c009cc57f2a885f93c9f37a44976b4ca57bb7ea26323a5ea72a302202fd18c53b827cd725e597d9519dace39008e3e8c0b85e60399fa00f427fd18ae:922c64590222798bb761d5b6d8e72950
