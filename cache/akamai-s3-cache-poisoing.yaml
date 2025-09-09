@@ -40,22 +40,8 @@ http:
         - "\x1e"
         - "\x1f"
       bucket:
-        - "nuclei-ap-northeast-1.s3-ap-northeast-1.amazonaws.com"
-        - "nuclei-ap-northeast-2.s3-ap-northeast-2.amazonaws.com"
-        - "nuclei-ap-northeast-3.s3-ap-northeast-3.amazonaws.com"
-        - "nuclei-ap-south-1.s3-ap-south-1.amazonaws.com"
-        - "nuclei-ap-southeast-1.s3-ap-southeast-1.amazonaws.com"
-        - "nuclei-ap-southeast-2.s3-ap-southeast-2.amazonaws.com"
-        - "nuclei-ca-central-1.s3-ca-central-1.amazonaws.com"
-        - "nuclei-eu-central-1.s3-eu-central-1.amazonaws.com"
-        - "nuclei-eu-north-1.s3-eu-north-1.amazonaws.com"
-        - "nuclei-eu-west-1.s3-eu-west-1.amazonaws.com"
-        - "nuclei-eu-west-2.s3-eu-west-2.amazonaws.com"
-        - "nuclei-eu-west-3.s3-eu-west-3.amazonaws.com"
-        - "nuclei-sa-east-1.s3-sa-east-1.amazonaws.com"
-        - "nuclei-us-east-2.s3-us-east-2.amazonaws.com"
         - "nuclei-us-west-1.s3-us-west-1.amazonaws.com"
-        - "nuclei-us-west-2.s3-ap-west-2.amazonaws.com"
+        
     stop-at-first-match: true
     unsafe: true
     matchers:
