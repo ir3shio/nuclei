@@ -3,7 +3,7 @@ id: nextjs-middleware-ssrf
 info:
   name: Nextjs Middleware ssrf
   author: omkar7505
-  severity: critical
+  severity: high
   description: Nextjs Middleware ssrf with Location header
   reference:
     - https://blog.rootsys.at/posts/nextjs-and-the-mutated-middleware/
