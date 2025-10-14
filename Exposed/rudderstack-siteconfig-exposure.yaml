@@ -1,0 +1,27 @@
+id: rudderstack-siteconfig-exposure
+info:
+  name: RudderStack siteconfig exposure
+  description: |
+    Detects public exposure of the RudderStack Profiles configuration file (siteconfig.yaml), 
+    which may contain highly sensitive data like database credentials and git repository secrets.
+  author: omkar7505
+  severity: high
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/siteconfig.yaml"
+      - "{{BaseURL}}/.pb/siteconfig.yaml"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "connections:"
+          - "target:"
+          - "outputs:"
+        condition: and
+        
+      - type: status
+        status:
+          - 200
