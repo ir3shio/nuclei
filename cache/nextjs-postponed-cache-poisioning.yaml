@@ -4,8 +4,7 @@ info:
   name: Nextjs Postponed Cache Posioning 
   author: omkar7505
   severity: high
-  description: |
-    This template checks if the `x-nextjs-postponed: 1` header is sent along with a cache buster in the URL. Maunally check if it is vulnerable to cache posioning 
+  description: This template checks if the `x-nextjs-postponed` header is sent along with a cache buster in the URL. Maunally check if it is vulnerable to cache posioning 
   tags: omkar7505,nextjs,cache
 
 variables:
@@ -22,10 +21,9 @@ http:
         GET /?cb={{rand}} HTTP/1.1
         Host: {{Hostname}}
 
-
     matchers:
       - type: dsl
         dsl:
-          - "status_code_1 == 204
-          - "status_code_2 == 204
+          - "status_code_1 == 204"
+          - "status_code_2 == 204"
         condition: and

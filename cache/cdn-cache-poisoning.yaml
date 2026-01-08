@@ -13,11 +13,14 @@ info:
     max-request: 2
     shodan-query: X-Amz-Server-Side-Encryption
   tags: cache,aws,poisoning,cdn,misconfig
+variables:
+  cache_key: "{{to_lower(rand_base(6))}}"
+
 
 http:
   - raw:
       - |
-        GET /?{{string}} HTTP/1.1
+        GET /?{{cache_key}}=1 HTTP/1.1
         Host: {{Hostname}}
         X-amz-copy-source: omkar7505.com
         X-amz-website-redirect-location: omkar7505.com
@@ -27,7 +30,7 @@ http:
         X-Amz-test: omkar7505.com 
 
       - |
-        GET /?{{string}} HTTP/1.1
+        GET /?{{cache_key}}=1 HTTP/1.1
         Host: {{Hostname}}
 
     matchers:
