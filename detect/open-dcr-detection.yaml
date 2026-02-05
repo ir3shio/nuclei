@@ -4,6 +4,7 @@ info:
   name: Open Dynamic Client Registration Detection
   author: amirmsafari
   severity: info
+  reference: https://blog.voorivex.team/shaking-the-mcp-tree
 
 requests:
   - method: GET
