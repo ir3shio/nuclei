@@ -1,0 +1,51 @@
+id: open-dcr-detection
+
+info:
+  name: Open Dynamic Client Registration Detection
+  author: amirmsafari
+  severity: info
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.well-known/openid-configuration"
+      - "{{BaseURL}}/.well-known/oauth-authorization-server"
+
+    stop-at-first-match: true
+    extractors:
+      - type: json
+        name: registration_endpoint
+        internal: true
+        json:
+          - ".registration_endpoint"
+
+  - method: POST
+    path:
+      - "{{registration_endpoint}}"
+
+    headers:
+      Content-Type: application/json
+
+    body: |
+      {
+        "client_name": "Example App",
+        "redirect_uris": ["https://example.com/callback"],
+        "grant_types": ["authorization_code"],
+        "response_types": ["code"]
+      }
+
+    matchers:
+      - type: status
+        status:
+          - 200
+          - 201
+
+      - type: word
+        part: header
+        words:
+          - "application/json"
+
+      - type: word
+        part: body
+        words:
+          - "client_id"
